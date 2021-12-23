@@ -17,6 +17,7 @@ public class JavaCalculator {
                 textDisplay.setText(btnOneText);
             }
         });
+
         btnTwo.addActionListener(e -> {
             String btnOneText = textDisplay.getText() + btnTwo.getText();
             textDisplay.setText(btnOneText);
