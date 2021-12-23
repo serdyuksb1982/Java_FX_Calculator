@@ -1,12 +1,21 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class JavaCalculator {
     private void getOperator(String btnText) {
         math_operator = btnText.charAt(0);
-        total1 = total1 + Double.parseDouble(textDisplay.getText());
-        textDisplay.setText("");
+        try {
+            total1 = total1 + Double.parseDouble(textDisplay.getText());
+            b = new BigDecimal(total1);
+            textDisplay.setText("");
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+
     }
     public JavaCalculator() {
 
@@ -17,7 +26,6 @@ public class JavaCalculator {
                 textDisplay.setText(btnOneText);
             }
         });
-
         btnTwo.addActionListener(e -> {
             String btnOneText = textDisplay.getText() + btnTwo.getText();
             textDisplay.setText(btnOneText);
@@ -76,21 +84,21 @@ public class JavaCalculator {
         btnEquals.addActionListener(e -> {
             switch (math_operator) {
                 case '+':
-                    total2 = total1 + Double.parseDouble(textDisplay.getText());
+                    b = b.add(new BigDecimal(textDisplay.getText()));
                     break;
                 case '-':
-                    total2 = total1 - Double.parseDouble(textDisplay.getText());
+                    b = b.subtract(new BigDecimal(textDisplay.getText()));
                     break;
                 case '/':
-                    total2 = total1 / Double.parseDouble(textDisplay.getText());
+                    b = b.divide(new BigDecimal(textDisplay.getText()), RoundingMode.HALF_UP);
                     break;
                 case '*':
-                    total2 = total1 * Double.parseDouble(textDisplay.getText());
+                    b = b.multiply(new BigDecimal(textDisplay.getText()));
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + math_operator);
             }
-            textDisplay.setText(Double.toString(total2));
+            textDisplay.setText(b.toString());
             total1 = 0;
         });
         btnClear.addActionListener(e -> {
@@ -124,6 +132,7 @@ public class JavaCalculator {
 
     private double total1 = 0.0;
     private double total2 = 0.0;
+    private BigDecimal b;
     private char math_operator;
     private JPanel JavaCalculator;
     private JTextField textDisplay;
