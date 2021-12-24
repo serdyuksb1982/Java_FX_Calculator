@@ -90,7 +90,7 @@ public class JavaCalculator {
                     b = b.subtract(new BigDecimal(textDisplay.getText()));
                     break;
                 case '/':
-                    b = b.divide(new BigDecimal(textDisplay.getText()), RoundingMode.HALF_UP);
+                    b = b.divide(new BigDecimal(textDisplay.getText()),5, RoundingMode.HALF_UP);
                     break;
                 case '*':
                     b = b.multiply(new BigDecimal(textDisplay.getText()));
